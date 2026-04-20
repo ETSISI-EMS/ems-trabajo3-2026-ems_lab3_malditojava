@@ -247,16 +247,13 @@ public class ContactosCovid {
 	}
 	
 	private FechaHora parsearFecha (String fecha, String hora) {
-		int dia, mes, anio;
-		String[] valores = fecha.split("\\/");
-		dia = Integer.parseInt(valores[0]);
-		mes = Integer.parseInt(valores[1]);
-		anio = Integer.parseInt(valores[2]);
-		int minuto, segundo;
-		valores = hora.split("\\:");
-		minuto = Integer.parseInt(valores[0]);
-		segundo = Integer.parseInt(valores[1]);
-		FechaHora fechaHora = new FechaHora(dia, mes, anio, minuto, segundo);
+		FechaHora fechaHora = parsearFecha(fecha);
+		int horas, minuto;
+		String[] valores = hora.split("\\:");
+		horas = Integer.parseInt(valores[0]);
+		minuto = Integer.parseInt(valores[1]);
+		fechaHora.getHora().setHora(horas);
+		fechaHora.getHora().setMinuto(minuto);
 		return fechaHora;
 	}
 
