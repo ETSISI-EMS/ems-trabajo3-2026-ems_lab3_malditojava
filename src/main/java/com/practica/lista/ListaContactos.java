@@ -28,24 +28,7 @@ public class ListaContactos {
 				 * Insertamos en la lista de coordenadas
 				 */
 				NodoPosicion npActual = aux.getListaCoordenadas();
-				NodoPosicion npAnt=null;		
-				boolean npEncontrado = false;
-				while (npActual!=null && !npEncontrado) {
-					if(npActual.getCoordenada().equals(p.getCoordenada())) {
-						npEncontrado=true;
-						npActual.setNumPersonas(npActual.getNumPersonas()+1);
-					}else {
-						npAnt = npActual;
-						npActual = npActual.getSiguiente();
-					}
-				}
-				if(!npEncontrado) {
-					NodoPosicion npNuevo = new NodoPosicion(p.getCoordenada(),1, null);
-					if(aux.getListaCoordenadas()==null)
-						aux.setListaCoordenadas(npNuevo);
-					else
-						npAnt.setSiguiente(npNuevo);			
-				}
+				insertarNodoPosicion(aux, p, npActual);
 			}else if(aux.getFecha().compareTo(p.getFechaPosicion())<0) {
 				ant = aux;
 				aux=aux.getSiguiente();
@@ -63,24 +46,7 @@ public class ListaContactos {
 
 			
 			NodoPosicion npActual = nuevo.getListaCoordenadas();
-			NodoPosicion npAnt=null;	
-			boolean npEncontrado = false;
-			while (npActual!=null && !npEncontrado) {
-				if(npActual.getCoordenada().equals(p.getCoordenada())) {
-					npEncontrado=true;
-					npActual.setNumPersonas(npActual.getNumPersonas()+1);
-				}else {
-					npAnt = npActual;
-					npActual = npActual.getSiguiente();
-				}
-			}
-			if(!npEncontrado) {
-				NodoPosicion npNuevo = new NodoPosicion(p.getCoordenada(),  1, null);				
-				if(nuevo.getListaCoordenadas()==null)
-					nuevo.setListaCoordenadas(npNuevo);
-				else
-					npAnt.setSiguiente(npNuevo);			
-			}
+			insertarNodoPosicion(nuevo, p, npActual);
 			
 			if(ant!=null) {
 				nuevo.setSiguiente(aux);
@@ -145,19 +111,48 @@ public class ListaContactos {
 	 * nuestra lista funciona de manera correcta.
 	 */
 	public int numPersonasEntreDosInstantes(FechaHora inicio, FechaHora fin) {
+		return numPersonasONodosCoordenadasEntreDosInstantes(inicio, fin, true);
+	}
+
+
+	public int numNodosCoordenadaEntreDosInstantes(FechaHora inicio, FechaHora fin) {
+		return numPersonasONodosCoordenadasEntreDosInstantes(inicio, fin, false);
+	}
+
+
+	private void insertarNodoPosicion(NodoTemporal nodoTemporal, PosicionPersona p, NodoPosicion nodoPosicion) {
+		NodoPosicion npAnt=null;
+		boolean npEncontrado = false;
+		while (nodoPosicion!=null && !npEncontrado) {
+			if(nodoPosicion.getCoordenada().equals(p.getCoordenada())) {
+				npEncontrado=true;
+				nodoPosicion.setNumPersonas(nodoPosicion.getNumPersonas()+1);
+			}else {
+				npAnt = nodoPosicion;
+				nodoPosicion = nodoPosicion.getSiguiente();
+			}
+		}
+		if(!npEncontrado) {
+			NodoPosicion npNuevo = new NodoPosicion(p.getCoordenada(),1, null);
+			if(nodoTemporal.getListaCoordenadas()==null)
+				nodoTemporal.setListaCoordenadas(npNuevo);
+			else
+				npAnt.setSiguiente(npNuevo);
+		}
+	}
+
+	private int numPersonasONodosCoordenadasEntreDosInstantes(FechaHora inicio, FechaHora fin, Boolean personas) {
 		if(this.size==0)
 			return 0;
 		NodoTemporal aux = lista;
 		int cont = 0;
-		int a;
-		cont = 0;
 		while(aux!=null) {
 			if(aux.getFecha().compareTo(inicio)>=0 && aux.getFecha().compareTo(fin)<=0) {
 				NodoPosicion nodo = aux.getListaCoordenadas();
 				while(nodo!=null) {
-					cont = cont + nodo.getNumPersonas();
+					cont += decidirSiEsPersonaOCoordenadas(personas, nodo);
 					nodo = nodo.getSiguiente();
-				}				
+				}
 				aux = aux.getSiguiente();
 			}else {
 				aux=aux.getSiguiente();
@@ -165,29 +160,13 @@ public class ListaContactos {
 		}
 		return cont;
 	}
-	
-	
-	
-	public int numNodosCoordenadaEntreDosInstantes(FechaHora inicio, FechaHora fin) {
-		if(this.size==0)
-			return 0;
-		NodoTemporal aux = lista;
-		int cont = 0;
-		int a;
-		cont = 0;
-		while(aux!=null) {
-			if(aux.getFecha().compareTo(inicio)>=0 && aux.getFecha().compareTo(fin)<=0) {
-				NodoPosicion nodo = aux.getListaCoordenadas();
-				while(nodo!=null) {
-					cont = cont + 1;
-					nodo = nodo.getSiguiente();
-				}				
-				aux = aux.getSiguiente();
-			}else {
-				aux=aux.getSiguiente();
-			}
+
+	private int decidirSiEsPersonaOCoordenadas(boolean personas, NodoPosicion nodo) {
+		if (personas) {
+			return nodo.getNumPersonas();
+		} else {
+			return 1;
 		}
-		return cont;
 	}
 	
 	
