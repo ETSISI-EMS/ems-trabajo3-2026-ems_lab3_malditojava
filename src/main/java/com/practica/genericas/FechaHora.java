@@ -113,6 +113,27 @@ public class FechaHora implements Comparable<FechaHora>{
 		this.hora = hora;
 	}
 
+    public static FechaHora parsearFecha (String fecha) {
+        int dia, mes, anio;
+        String[] valores = fecha.split("\\/");
+        dia = Integer.parseInt(valores[0]);
+        mes = Integer.parseInt(valores[1]);
+        anio = Integer.parseInt(valores[2]);
+        FechaHora fechaHora = new FechaHora(dia, mes, anio, 0, 0);
+        return fechaHora;
+    }
+
+    public static FechaHora parsearFecha (String fecha, String hora) {
+        FechaHora fechaHora = parsearFecha(fecha);
+        int horas, minuto;
+        String[] valores = hora.split("\\:");
+        horas = Integer.parseInt(valores[0]);
+        minuto = Integer.parseInt(valores[1]);
+        fechaHora.getHora().setHora(horas);
+        fechaHora.getHora().setMinuto(minuto);
+        return fechaHora;
+    }
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
