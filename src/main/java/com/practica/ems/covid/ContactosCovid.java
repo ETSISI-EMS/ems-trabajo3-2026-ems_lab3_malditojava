@@ -203,7 +203,7 @@ public class ContactosCovid {
 					throw new EmsInvalidNumberOfDataException(
 							"El número de datos para LOCALIZACION es menor de 6" );
 				}
-				PosicionPersona pp = this.crearPosicionPersona(datos);
+				PosicionPersona pp = PosicionPersona.crearPosicionPersona(datos);
 				this.localizacion.addLocalizacion(pp);
 				this.listaContactos.insertarNodoTemporal(pp);
 			}
