@@ -1,3 +1,4 @@
+[![Quality gate](https://c1.etsisi.upm.es:8888/api/project_badges/quality_gate?project=ETSISI-EMS_ems-trabajo3-2026-ems_lab3_malditojava_4f14b2e8-f8b0-4120-acc7-e02d95d7489d&token=sqb_4d2423175778b6edc020ccd7d4d165d09b68bc5b)](https://c1.etsisi.upm.es:8888/dashboard?id=ETSISI-EMS_ems-trabajo3-2026-ems_lab3_malditojava_4f14b2e8-f8b0-4120-acc7-e02d95d7489d)
 [![Build](https://github.com/ETSISI-EMS/ems-trabajo3-2026-ems_lab3_malditojava/actions/workflows/main.yml/badge.svg)](https://github.com/ETSISI-EMS/ems-trabajo3-2026-ems_lab3_malditojava/actions/workflows/main.yml)
 
 # EMS-lab3 Maintainability
